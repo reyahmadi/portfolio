@@ -1,0 +1,129 @@
+@font-face {
+  font-family: 'Yellow Tail';
+  src: local('Yellow Tail'), url(./static/fonts/Yellowtail/Yellowtail-Regular.ttf) format('truetype');
+  /* other formats include: 'woff2', 'truetype, 'opentype',
+                            'embedded-opentype', and 'svg' */
+}
+
+@font-face {
+  font-family: 'Didact Gothic';
+  src: local('Didact Gothic'), url(./static/fonts/Didact_Gothic/DidactGothic-Regular.ttf) format('truetype');
+}
+
+
+.nav-bg{
+  box-shadow: none !important;
+  position: fixed;
+}
+
+
+.greeting{
+  font-family: "Yellow Tail", cursive !important;
+  padding: 5%;
+  color: #11055a;
+}
+
+.fade-out{
+    opacity: 0;
+    transition: all 0.5s ease-in-out;
+    /* display: none;  */
+    position: absolute;
+    transform: translateX(-10px);
+
+}
+
+.fade-in{
+  opacity: 1;
+  transition: all 0.5s ease-in-out;
+  position: relative;
+}
+
+.neon-card{
+  background-color: transparent !important;
+  border: 0.2rem solid #fff;
+  border-radius: 1rem !important;
+  box-shadow: 0 0 .2rem #fff,
+            0 0 .2rem #fff,
+            0 0 0.2rem rgb(0, 170, 255),
+            0 0 0.8rem rgb(0, 170, 255),
+            0 0 0.8rem rgb(0, 170, 255),
+            inset 0 0 1.3rem rgb(0, 170, 255) !important;
+}
+
+@keyframes flicker {
+  0%, 18%, 22%, 25%, 53%, 57%, 100% {
+    text-shadow:
+      0 0 2px #fff,
+      0 0 9px #fff,
+      0 0 17px #fff,
+      0 0 40px rgb(0, 170, 255),
+      0 0 80px rgb(0, 170, 255),
+      0 0 90px rgb(0, 170, 255),
+      0 0 100px rgb(0, 170, 255),
+      0 0 150px rgb(0, 170, 255);
+  }
+  20%, 55% {       
+    text-shadow: none;
+  }
+}
+
+
+.flicker{
+  animation: flicker 10s infinite alternate; 
+}
+
+#my-image{
+  max-width: 100%;
+  padding: 5%;
+  height: auto;
+  object-fit: cover;
+  display: block;
+  border-radius: 25%;
+}
+
+
+#bio{
+  /* font-family: "Didact Gothic"; */
+  padding: 5%;
+}
+
+#role{
+  padding: 0 5% 5% 5%;
+  color: #11055a;
+  /* font-family: Verdana, Geneva, Tahoma, sans-serif; */
+}
+
+#education-box{
+  color: #ffffff;
+  background-color: #fffff7;
+  padding: 5%;
+}
+
+.education-icon{
+  font-size: 50px;
+  direction: rtl;
+}
+
+
+
+#work-box{
+  padding: 1% 0%;
+}
+
+.work-card{
+  border: solid 0.2rem #11055a;
+}
+
+a:link, a:visited, a:hover, a:active {
+  text-decoration: none;
+}
+
+.dashboard-img {
+  max-width: 100%;
+  width: 100%;
+  height: auto;
+  display: block;
+  margin-top: 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(221, 217, 208, 0.9);
+}
