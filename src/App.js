@@ -9,6 +9,7 @@ import About from './components/aboutMe';
 import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom';
 import LAD from './components/LAD';
 import Dashboard from './components/dashboard';
+import Contact from './components/contact';
 
 // ─── THEME ───────────────────────────────────────────────────────────────────
 const theme = createTheme({
@@ -145,6 +146,14 @@ function App() {
             </div>
           </Fade>
         } />      
+
+        <Route path="/contact" element={
+          <Fade in={location.pathname==="/Contact"} timeout={500} unmountOnExit>
+            <div>
+              <Contact /> 
+            </div>
+          </Fade>
+        } /> 
 
         <Route path="/LAD" element={
           <Fade in={location.pathname==="/LAD"} timeout={500} unmountOnExit>
