@@ -127,3 +127,17 @@ a:link, a:visited, a:hover, a:active {
   border-radius: 8px;
   border: 1px solid rgba(221, 217, 208, 0.9);
 }
+
+.dashboard-card{
+  padding: 10px !important;
+}
+
+.dashboard-paper{
+  padding: 10px;
+  margin-bottom: 5px;
+}
+
+.dashboard-dropdown{
+  width: 100%;
+  height: 40px;
+}

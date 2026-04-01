@@ -20,6 +20,7 @@ import CodeIcon from '@mui/icons-material/Code';
 import DesignServicesIcon from '@mui/icons-material/DesignServices';
 import PeopleOutlineIcon from '@mui/icons-material/PeopleOutline';
 import { CaseStudyShell, AnimatedSection } from './caseStudyLayout';
+import IATDashboard from '../IAT806/components/dashboard'
 
 const DASHBOARD_NAV_SECTIONS = [
   { id: 'problem', label: 'Problem' },
@@ -466,19 +467,13 @@ series:
     },
     {
       title: 'Sortable peer table',
-      desc: "DataTable renders an MUI table with sortable columns. It handles both string (localeCompare) and numeric sorting, and highlights the current student's row via a highlight flag on the data object.",
-      code: `// Dynamic sort handles both string and numeric columns
+      desc: "DataTable renders an MUI table with sortable columns. It handles numeric sorting, and highlights the current student's row via a highlight flag on the data object.",
+      code: `// Sorting numeric columns only
 onClick={() => {
   setOrder(order === 'asc' ? 'desc' : 'asc');
   setOrderBy(head.value);
 
-  if (head.type === "string")
-    setData([...data].sort((a, b) =>
-      order === 'desc'
-        ? a[head.value].localeCompare(b[head.value])
-        : b[head.value].localeCompare(a[head.value])
-    ));
-  else if (head.type === "number")
+   if (head.type === "number")
     setData([...data].sort((a, b) =>
       order === 'asc'
         ? a[head.value] - b[head.value]
@@ -507,18 +502,7 @@ onClick={() => {
         {/* Architecture */}
         <Card sx={{ mb: 4, bgcolor: 'grey.100' }}>
           <CardContent>
-            <Typography variant="caption" color="text.disabled" display="block" sx={{ mb: 2 }}>Component architecture</Typography>
-            <Stack alignItems="center" spacing={1.5}>
-              <Box sx={{ bgcolor: 'primary.main', color: 'white', px: 3, py: 1, borderRadius: 2, fontSize: '13px', fontWeight: 500 }}>Dashboard (view state, data)</Box>
-              <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', justifyContent: 'center' }}>
-                {['Chart — grade', 'Chart — time', 'DataTable'].map(c => (
-                  <Box key={c} sx={{ bgcolor: 'white', border: '1px solid', borderColor: 'divider', px: 2.5, py: 0.75, borderRadius: 2, fontSize: '13px', color: 'text.secondary' }}>{c}</Box>
-                ))}
-              </Box>
-              <Typography variant="body2" color="text.disabled" sx={{ fontSize: '12px' }}>
-                grades.js — static data module (LMS API in production)
-              </Typography>
-            </Stack>
+            <IATDashboard />
           </CardContent>
         </Card>
 
