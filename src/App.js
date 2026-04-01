@@ -108,7 +108,6 @@ const theme = createTheme({
 function App() {
   const [openTab, setOpenTab] = React.useState("Home");
   const location = useLocation()
-  console.log(location)
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
