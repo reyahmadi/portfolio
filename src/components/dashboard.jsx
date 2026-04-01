@@ -139,7 +139,7 @@ function ProblemSection() {
           {[
             { label: 'Primary users', value: 'Undergraduate students in a programming course' },
             { label: 'Core need', value: 'Contextual performance feedback (grades and effort)' },
-            { label: 'Design constraint', value: 'Support self-regulation; ' },
+            { label: 'Design constraint', value: 'Support self-regulation and informed decision making' },
             { label: 'Technical constraint', value: 'Implementable as a single-semester React project' },
           ].map(({ label, value }) => (
             <Grid item xs={12} sm={6} key={label}>
@@ -158,29 +158,29 @@ function ProblemSection() {
 }
 
 function IdeationSection() {
-  const [expanded, setExpanded] = useState('concept-c');
+  const [expanded, setExpanded] = useState('concept-a');
   const concepts = [
     {
       id: 'concept-a', name: 'Concept A — Comparison based on grade group', chosen: false,
       summary: "A student-facing dashboard providing both outcome-oriented feedback (grades) and process-oriented feedback (study behaviour). A radar chart compares grade distributions across assignments to flag difficulty outliers. A bar chart shows the current cumulative grade distribution for the class. A timeline section visualises when and how long students in each grade band (A, B, C and below) engaged with assignments filterable by group via a dropdown.",
-      rationale: 'Emphasises trend over time rather than point-in-time rank. Students can see whether their performance is improving, plateauing, or declining relative to the class.',
-      tradeoffs: 'Does not reveal effort-outcome relationships at the individual peer level. Line charts can be hard to parse when the student is close to the class average.',
-      uiElements: ['Line chart: grade over assignments', 'Overlaid class average band', 'Time-spent secondary axis', 'Assignment selector'],
+      rationale: 'Students willbe able to compare their time distribution to the ones with better grades to detect behavioral patterns while considering the class performance and the difficulty of the asignments.',
+      tradeoffs: 'The combination of radar chart, bar chart, and timeline may require onboarding for students unfamiliar with these visualisation types. Self-reported time might not be accurate',
+      uiElements: ['Bar chart: grade distribution', 'Radar chart', 'Gantt chart', 'Assignment selector', 'Grade group selector'],
     },
     {
       id: 'concept-b', name: 'Concept B — Comparison with the whole class and top students', chosen: false,
       summary: 'A student-facing dashboard that corrects misconceptions about peer behaviour by showing accurate time-on-task data, comparing the student\'s study time against the class average and the top 20% of performers. A leaderboard ranks students by total time spent. An expand toggle replaces a horizontal bar chart with a timeline heatmap showing how time is distributed across days and hours.',
       rationale: 'Students might overestimate how much peers procrastinate, which reinforces their own avoidance. Showing accurate time data from high performers provides a credible, motivating reference point. The leaderboard adds competitive motivation for students already performing well.',
-      tradeoffs: 'Dense with data; requires visual literacy. Risk of students fixating on rank rather than on learning strategies.',
-      uiElements: ['Scatter plot: grade vs. time', 'Highlighted "you" dot', 'Quadrant overlay (high effort / low effort)', 'Assignment filter'],
+      tradeoffs: 'Self-reported time spent might not be accurate. The heatmap adds detail but increases cognitive load for students who need a quick summary.',
+      uiElements: ['Horizontal bar chart', 'timeline heatmap', 'expand/collapse toggle', 'hover tooltips'],
     },
     {
-      id: 'concept-c', name: 'Concept C — Comparison with peers', chosen: true,
+      id: 'concept-c', name: 'Concept C — Comparison with peers', chosen: false,
       summary: 
       'A student-facing dashboard that groups peers by expected grade and visualises each student\'s performance relative to their relevant peer group. An overview shows grade and time-spent rankings with the student highlighted, and a double-line chart tracks their trajectory against the group average across all assignments. Students can drill into a specific assignment via a dropdown to see per-assignment comparisons.',
       rationale: 'Balances detail and overview. The dual chart layout makes the effort-grade relationship visible without the cognitive load of a scatter plot. The sortable table gives students control over how they interpret peer data.',
       tradeoffs: 'More components to maintain. The bar chart view is only available per-assignment, not across all assignments simultaneously.',
-      uiElements: ['Line chart (overview mode)', 'Bar charts per assignment (grade + time)', 'Sortable peer comparison table', 'Assignment dropdown selector'],
+      uiElements: ['Line chart (overview mode)', 'Bar charts per assignment (grade + time)', 'ranking cards', 'Assignment dropdown selector'],
     },
   ];
 
@@ -190,7 +190,7 @@ function IdeationSection() {
         <SectionLabel>02 — Ideation & Concept Development</SectionLabel>
         <Typography variant="h2" sx={{ mb: 1.5 }}>Three directions, one design question</Typography>
         <Typography variant="body1" color="text.secondary" sx={{ mb: 4 }}>
-          The ideation phase explored three dashboard concepts, each making a different bet on what contextual information would best support student self-regulation. All three were grounded in social comparison theory and Pekrun's achievement emotions framework.
+          The ideation phase explored three dashboard concepts, each making a different bet on what contextual information would best support student self-regulation. All three were grounded in Social Comparison Theory, Social Norm Theory, and Pekrun's achievement emotions framework.
         </Typography>
         <Stack spacing={1.5}>
           {concepts.map(c => (
@@ -236,12 +236,6 @@ function IdeationSection() {
             </Accordion>
           ))}
         </Stack>
-        <Paper elevation={0} sx={{ bgcolor: 'primary.light', borderRadius: 3, p: 3, mt: 3 }}>
-          <Typography variant="caption" color="primary.main" display="block" sx={{ mb: 1 }}>Why Concept C was selected</Typography>
-          <Typography variant="body2" color="text.secondary">
-            Concept C was chosen because it offered the most complete picture of both grade and effort data while keeping each view legible. The dual-chart layout directly implements the key motivational design principle: <em>showing that peers with higher grades spent more time</em> — the signal most likely to drive effort investment rather than comparison anxiety. The sortable table adds student agency, letting users explore peer data on their own terms.
-          </Typography>
-        </Paper>
       </Container>
     </AnimatedSection>
   );
@@ -252,22 +246,20 @@ function FigmaSection() {
   const [tab, setTab] = useState(0);
   const screens = [
     {
-      label: 'Overview mode',
-      desc: "Line charts showing class average vs. student's grade and time-spent across all four assignments. Gives a semester-wide trend view at a glance.",
-      details: ['Dropdown defaults to "overview"', 'Two line charts stacked: grades (blue) and time (orange)', 'Right panel: sortable table with all peers\' current averages', 'Student row highlighted in light blue'],
+      label: 'Concept A',
+      desc: "A dashboard containing information for effective comparison between different grade groups (A, B, C and below)",
+      details: ["Radar chart showing average grade on each assignment", "Horizontal bar chart for grouped grades", "Gantt chart showing time distribution", "Dropdown list for grade groups and assignments"],
       chartType: 'line',
+      img: require("../static/img/conceptA.png"),
+      link: 'https://www.figma.com/design/sLTjKFmue8w7fApIcWDPGe/P3-2?node-id=2-96&t=RXW51wtTwwpv7xAf-0'
     },
     {
-      label: 'Per-assignment mode',
-      desc: "Bar charts showing each peer's grade and time spent on a selected assignment. The student's own bar is differentiated by a lighter shade.",
-      details: ['Bars sorted ascending by grade by default', 'Student bar uses a lighter tint vs peer bars', 'Peer table updates to show assignment-specific data', 'Hover tooltips on bars show exact values'],
-      chartType: 'bar',
-    },
-    {
-      label: 'Ranking table',
-      desc: 'A sortable MUI table showing all peers by anonymised ID, with grade and time columns. Clicking any column header toggles ascending/descending sort.',
-      details: ['Columns: rank, student ID, grade, time spent', 'Sortable by all three data columns', 'Student row always highlighted in blue', 'Max height with scroll to keep layout stable'],
+      label: 'Concept C',
+      desc: "Line charts showing class average vs. student's grade and time-spent across all four assignments. Gives a semester-wide trend view at a glance.",
+      details: ['Dropdown defaults to "overview"', 'Two line charts stacked: grades (blue) and time (orange)', 'Right panel: ranking of student\'s current grade and time spent', 'Student row highlighted in light blue'],
       chartType: 'table',
+      img: require("../static/img/conceptC.png"),
+      link: "https://www.figma.com/design/ROMhp8adHANnIjJuCWhfD7/P3-1?node-id=20-806&t=NlUFoF8ayO8Ievv4-0"
     },
   ];
 
@@ -277,7 +269,8 @@ function FigmaSection() {
         <SectionLabel>03 — Figma Prototypes</SectionLabel>
         <Typography variant="h2" sx={{ mb: 1.5 }}>Prototyping the three key screens</Typography>
         <Typography variant="body1" color="text.secondary" sx={{ mb: 4 }}>
-          The selected concept was prototyped in Figma across three key screens before implementation. Each screen was walked through with peers to identify layout and labelling issues before writing any code.
+          The concept A and C were selected for protoyping as concept B was mainly foxused on time spent which is a self reported value by students and
+          might not be accurate. The prototype were uilt using Figma.
         </Typography>
         <Box sx={{ borderBottom: 1, borderColor: 'divider', mb: 3 }}>
           <Tabs value={tab} onChange={(_, v) => setTab(v)} textColor="primary" indicatorColor="primary">
@@ -286,58 +279,10 @@ function FigmaSection() {
         </Box>
         {screens.map((s, i) => tab === i && (
           <Grid container spacing={3} key={i}>
-            <Grid item xs={12} md={5}>
-              <Box sx={{ bgcolor: 'grey.100', border: '1px solid', borderColor: 'divider', borderRadius: 2, p: 2, height: 220, display: 'flex', gap: 1 }}>
-                {s.chartType !== 'table' && (
-                  <Box sx={{ flex: 2, display: 'flex', flexDirection: 'column', gap: 1 }}>
-                    {[0, 1].map(ci => (
-                      <Box key={ci} sx={{ bgcolor: 'white', border: '1px solid', borderColor: 'divider', borderRadius: 1, p: 1, flex: 1 }}>
-                        <Box sx={{ width: '55%', height: 7, bgcolor: 'grey.300', borderRadius: 1, mb: 1 }} />
-                        {s.chartType === 'line' ? (
-                          <svg width="100%" height="55" viewBox="0 0 200 55">
-                            <polyline points="10,48 60,28 110,38 160,18 190,22" fill="none" stroke={ci === 0 ? theme.palette.primary.main : theme.palette.secondary.main} strokeWidth="2" />
-                            <polyline points="10,38 60,42 110,48 160,32 190,40" fill="none" stroke={theme.palette.text.disabled} strokeWidth="1.5" strokeDasharray="4,3" />
-                          </svg>
-                        ) : (
-                          <Box sx={{ display: 'flex', alignItems: 'flex-end', gap: '2px', height: 55, pt: 0.5 }}>
-                            {[35,55,42,70,30,62,48,75,38,65].map((h,j) => (
-                              <Box
-                                key={j}
-                                sx={{
-                                  flex: 1,
-                                  height: `${h}%`,
-                                  bgcolor: j === 0
-                                    ? (ci === 0 ? alpha(theme.palette.primary.main, 0.45) : alpha(theme.palette.secondary.main, 0.45))
-                                    : (ci === 0 ? theme.palette.primary.main : theme.palette.secondary.main),
-                                  borderRadius: '2px 2px 0 0',
-                                  opacity: 0.9,
-                                }}
-                              />
-                            ))}
-                          </Box>
-                        )}
-                      </Box>
-                    ))}
-                  </Box>
-                )}
-                <Box sx={{ flex: s.chartType === 'table' ? 1 : undefined, width: s.chartType === 'table' ? '100%' : undefined, bgcolor: 'white', border: '1px solid', borderColor: 'divider', borderRadius: 1, p: 1.5 }}>
-                  <Box sx={{ display: 'flex', gap: 1, mb: 1 }}>
-                    {['Student','Grade','Time'].map(h => <Box key={h} sx={{ flex: 1, height: 8, bgcolor: 'grey.300', borderRadius: 1 }} />)}
-                  </Box>
-                  {[true,false,false,false,false,false,false,false].map((hl, j) => (
-                    <Box key={j} sx={{ display: 'flex', gap: 1, mb: '3px', bgcolor: hl ? 'primary.light' : 'transparent', borderRadius: 0.5, p: '2px 3px' }}>
-                      <Box sx={{ flex: 1, height: 6, bgcolor: hl ? alpha(theme.palette.primary.main, 0.35) : 'grey.200', borderRadius: 1 }} />
-                      <Box sx={{ flex: 1, height: 6, bgcolor: hl ? alpha(theme.palette.primary.main, 0.35) : 'grey.200', borderRadius: 1 }} />
-                      <Box sx={{ flex: 1, height: 6, bgcolor: hl ? alpha(theme.palette.primary.main, 0.35) : 'grey.200', borderRadius: 1 }} />
-                    </Box>
-                  ))}
-                </Box>
-              </Box>
-              <Typography variant="body2" color="text.disabled" sx={{ display: 'block', mt: 1, textAlign: 'center', fontSize: '11px' }}>
-                Schematic representation of Figma prototype layout
-              </Typography>
+            <Grid item xs={12} md={8}>
+              <img height={550} src={s.img} />
             </Grid>
-            <Grid item xs={12} md={7}>
+            <Grid item xs={12} md={4}>
               <Typography variant="h3" sx={{ mb: 1 }}>{s.label}</Typography>
               <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>{s.desc}</Typography>
               <Typography variant="caption" color="text.disabled" display="block" sx={{ mb: 1 }}>Design specifications</Typography>
@@ -348,6 +293,9 @@ function FigmaSection() {
                     <ListItemText primary={d} primaryTypographyProps={{ variant: 'body2', color: 'text.secondary' }} />
                   </ListItem>
                 ))}
+                <Typography variant="body1" color="text.disabled" sx={{ display: 'block', mt: 1, textAlign: 'center', fontSize: '11px' }}>
+                <a href={s.link} target="_blank">Link to Figma Storyboard</a>
+              </Typography>
               </List>
             </Grid>
           </Grid>
@@ -358,46 +306,59 @@ function FigmaSection() {
 }
 
 function UsabilitySection() {
-  const findings = [
-    { num: '1', severity: 'positive', title: 'Dual-chart layout quickly communicates the grade–effort relationship', body: "Participants correctly identified within 30 seconds that peers with higher grades tended to spend more time. 'I can see immediately that if I put in more hours I'd probably do better' was a representative comment." },
-    { num: '2', severity: 'positive', title: 'The sortable table was the most-used feature', body: 'Every participant interacted with the table sort. Sorting by grade was the most common action, followed by time. Participants described it as "the most useful part" — it let them answer their own specific comparison questions.' },
-    { num: '3', severity: 'negative', title: 'The dropdown label "overview" was ambiguous', body: 'Three of five participants did not immediately understand that "overview" showed a cross-assignment trend view. Two clicked individual assignments first, then returned. A label like "All assignments" would set clearer expectations.' },
-    { num: '4', severity: 'negative', title: 'Peer IDs (s1, s2…) felt impersonal and confusing', body: 'Participants expected "Peer 1" or "Student A" rather than "s1". The abbreviated format looked like a system identifier rather than a friendly label, reducing trust in the data.' },
-    { num: '5', severity: 'neutral', title: 'Students wanted to know their percentile without scanning', body: 'All participants tried to locate themselves relative to the class before doing anything else. A "you are in the Xth percentile" summary label was requested multiple times as a fast entry point.' },
-    { num: '6', severity: 'negative', title: 'No explanation of why time data is shown alongside grades', body: 'Two participants asked "what is the time data for?" without guidance. The connection between effort investment and grade outcomes — central to the design rationale — was not self-evident from the interface alone.' },
+  const tasks = [
+    {
+      id: 'T1',
+      label: 'Figure out what each section does',
+      prompt: '"Without any guidance, explore the dashboard and describe out loud what you think each part is showing you."',
+      observations: [
+        'The ranking cards were the most immediately legible element — all participants correctly described its purpose within seconds',
+        'The "overview" dropdown option caused consistent confusion; participants expected a summary or settings page rather than a cross-assignment trend view',
+        'Peer identifiers such as "s1" and "s2" were interpreted as system-generated codes rather than anonymised student labels, leading participants to have questions. ',
+        'Participants needed more context about the "current rank in grades", like knowing how their performance differed from the top students',
+      ],
+    },
+        {
+      id: 'T2',
+      label: 'Compare performance to peers',
+      prompt: '"Using the dashboard, try to understand how your performance on assignments compares to your classmates."',
+      observations: [
+        'Most participants gravitated immediately to the ranking cards rather than the charts, treating it as the primary reference point',
+        'Participants who explored the bar charts took longer to orient themselves — they first scanned for their own bar before attempting any comparison',
+        'Several participants verbally noted the effort-grade relationship unprompted while exploring the charts: they observed that higher-ranked peers also appeared to spend more time',
+        'One participant expressed surprise that time data was included at all, suggesting the connection between effort and outcomes was not immediately obvious from the interface',
+      ],
+    },
   ];
 
-  const susScores = [
-    { item: 'I would like to use this regularly', score: 4.2 },
-    { item: 'Felt unnecessarily complex', score: 2.1 },
-    { item: 'Easy to use', score: 4.4 },
-    { item: 'Needed support to use it', score: 1.6 },
-    { item: 'Functions were well integrated', score: 3.8 },
-    { item: 'Too much inconsistency', score: 1.8 },
-    { item: 'Others would learn fast', score: 4.3 },
-    { item: 'Very cumbersome to use', score: 1.4 },
-    { item: 'Felt confident using it', score: 4.1 },
-    { item: 'Needed to learn a lot first', score: 1.9 },
+  const themes = [
+    { num: '1', severity: 'positive', title: 'The grade–effort relationship was discoverable but not immediate', body: 'Participants who spent time with the bar charts did eventually notice the pattern between time invested and grades achieved. However, this insight emerged through exploration rather than from a clear design affordance — suggesting the relationship needs to be made more explicit.' },
+    { num: '2', severity: 'neutral', title: 'The ranking cards are useful yet need more context', body: 'Participants could easily interpret the intention of the cards but required more detail about their difference with better performing students.' },
+    { num: '3', severity: 'neutral', title: 'Participants wanted to locate themselves before comparing', body: 'Without exception, the first thing every participant tried to do was find their own data point. The dashboard did not surface a clear "you are here" anchor, which meant participants spent cognitive effort on self-location before they could begin comparison — the core task the dashboard is designed for.' },
+    { num: '4', severity: 'negative', title: 'Section labels and identifiers created unnecessary cognitive friction', body: 'The "overview" label, the "s1,s2" peer IDs, and the "A1,A2" Assignment IDs all required participants to resolve ambiguity before they could engage with the content. These are fixable issues that currently sit between the user and the dashboard\'s core value.' },
   ];
 
   return (
-    <AnimatedSection id="usability" sx={{ py: { xs: 7, md: 10 }, borderBottom: '1px solid', borderColor: 'divider' }}>
+    <Box id="usability" component="section" sx={{ py: { xs: 7, md: 10 }, borderBottom: '1px solid', borderColor: 'divider' }}>
       <Container maxWidth="md">
-        <SectionLabel>04 — Usability Study</SectionLabel>
-        <Typography variant="h2" sx={{ mb: 1.5 }}>Evaluating the prototype with 5 participants</Typography>
+        <SectionLabel>04 — Usability Evaluation</SectionLabel>
+        <Typography variant="h2" sx={{ mb: 1.5 }}>Think-aloud evaluation with 4 participants</Typography>
         <Typography variant="body1" color="text.secondary" sx={{ mb: 1 }}>
-          A moderated usability study was conducted with 5 university students (3 undergraduate, 2 graduate) currently enrolled in courses using Canvas. Participants completed three tasks using the Figma prototype and the React implementation, then completed the System Usability Scale.
+        Due to the course's limited timeline, the usability evaluation was narrowed down to a single high-potential prototype. 
+        I selected <strong>Concept C</strong> for final testing, as its use of familiar visualizations such as bar and line charts over more complex Radar or Gantt charts ensured better data interpretability and aligned with the technical feasibility goals of the project. <br/>
+        A moderated think-aloud study was conducted with 4 university students. Participants were asked to verbalise their thoughts continuously as 
+        they completed two tasks on the live application. Sessions were not scored or timed, the goal was to surface interpretive friction, navigational uncertainty, and unmet expectations through direct observation.
         </Typography>
         <Typography variant="body2" color="text.secondary" sx={{ mb: 4, fontStyle: 'italic' }}>
-          Participant quotes below are representative reconstructions based on session notes and think-aloud transcripts.
+          Observations and quotes below are reconstructed from session notes and think-aloud transcripts.
         </Typography>
 
-        <Grid container spacing={2} sx={{ mb: 4 }}>
+        <Grid container spacing={2} sx={{ mb: 5 }}>
           {[
-            { label: 'Participants', value: '5' },
-            { label: 'Session length', value: '~35 min' },
-            { label: 'SUS score', value: '74/100' },
-            { label: 'SUS rating', value: 'Good' },
+            { label: 'Participants', value: '4' },
+            { label: 'Method', value: 'Think-aloud' },
+            { label: 'Tasks', value: '2' },
+            { label: 'Setting', value: 'Moderated' },
           ].map(({ label, value }) => (
             <Grid item xs={6} sm={3} key={label}>
               <Card sx={{ textAlign: 'center' }}>
@@ -410,51 +371,53 @@ function UsabilitySection() {
           ))}
         </Grid>
 
-        <Typography variant="h3" sx={{ mb: 2 }}>Participant quotes</Typography>
-        <Grid container spacing={2} sx={{ mb: 4 }}>
-          {[
-            { text: "I like that I can see both my grade and how long I spent — it makes me realise I probably need to put in more time, not just study differently.", speaker: "P2", role: "3rd year undergraduate" },
-            { text: "The table is great. I sorted by grade first, then by time, and found three people who got higher grades than me but spent less time. That's actually helpful.", speaker: "P4", role: "Graduate student" },
-            { text: "I had to look for a while to find myself in the bar chart. Maybe highlight my bar more?", speaker: "P1", role: "2nd year undergraduate" },
-            { text: "What does 'overview' mean here? I wasn't sure if it was a summary or settings or what.", speaker: "P3", role: "3rd year undergraduate" },
-          ].map((q, i) => (
-            <Grid item xs={12} md={6} key={i}><Quote {...q} /></Grid>
+        <Typography variant="h3" sx={{ mb: 2 }}>Tasks & observations</Typography>
+        <Stack spacing={2} sx={{ mb: 5 }}>
+          {tasks.map(t => (
+            <Card key={t.id}>
+              <CardContent>
+                <Stack direction="row" spacing={1.5} alignItems="center" sx={{ mb: 1.5 }}>
+                  <Chip label={t.id} size="small" sx={{ bgcolor: 'primary.light', color: 'primary.main', fontWeight: 500, minWidth: 36 }} />
+                  <Typography variant="h4">{t.label}</Typography>
+                </Stack>
+                <Box sx={{ borderLeft: '3px solid', borderColor: 'secondary.main', pl: 2, mb: 2 }}>
+                  <Typography variant="body2" color="text.secondary" sx={{ fontStyle: 'italic' }}>{t.prompt}</Typography>
+                </Box>
+                <Typography variant="caption" color="text.disabled" display="block" sx={{ mb: 1 }}>Session observations</Typography>
+                <List dense disablePadding>
+                  {t.observations.map((o, i) => (
+                    <ListItem key={i} disablePadding sx={{ py: 0.75, borderBottom: '1px solid', borderColor: 'divider', '&:last-child': { border: 0 }, alignItems: 'flex-start' }}>
+                      <ListItemIcon sx={{ minWidth: 20, mt: 0.4 }}><ArrowForwardIcon sx={{ fontSize: 12, color: 'text.disabled' }} /></ListItemIcon>
+                      <ListItemText primary={o} primaryTypographyProps={{ variant: 'body2', color: 'text.secondary', lineHeight: 1.65 }} />
+                    </ListItem>
+                  ))}
+                </List>
+              </CardContent>
+            </Card>
           ))}
-        </Grid>
-
-        <Typography variant="h3" sx={{ mb: 2 }}>Key findings</Typography>
-        <Stack spacing={1.5} sx={{ mb: 5 }}>
-          {findings.map(f => <FindingCard key={f.num} {...f} />)}
         </Stack>
 
-        <Typography variant="h3" sx={{ mb: 2 }}>SUS item breakdown</Typography>
-        <Card>
-          <TableContainer>
-            <Table size="small">
-              <TableHead>
-                <TableRow>
-                  <TableCell sx={{ fontWeight: 500, fontSize: '12px', color: 'text.secondary' }}>Item</TableCell>
-                  <TableCell sx={{ fontWeight: 500, fontSize: '12px', color: 'text.secondary', width: 200 }}>Mean (1–5)</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {susScores.map(row => (
-                  <TableRow key={row.item} sx={{ '&:last-child td': { border: 0 } }}>
-                    <TableCell><Typography variant="body2" color="text.secondary">{row.item}</Typography></TableCell>
-                    <TableCell>
-                      <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
-                        <LinearProgress variant="determinate" value={(row.score / 5) * 100} sx={{ flex: 1, bgcolor: 'primary.light', '& .MuiLinearProgress-bar': { bgcolor: row.score >= 4 ? 'success.main' : row.score <= 2 ? 'error.main' : 'primary.main' } }} />
-                        <Typography variant="body2" sx={{ fontWeight: 500, minWidth: 24, textAlign: 'right', color: 'text.primary' }}>{row.score.toFixed(1)}</Typography>
-                      </Box>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Card>
+        <Typography variant="h3" sx={{ mb: 0.75 }}>Synthesised themes</Typography>
+        <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
+          Observations across both tasks were analysed to identify recurring patterns in participant behaviour and verbalisation.
+        </Typography>
+        <Stack spacing={1.5}>
+          {themes.map(f => <FindingCard key={f.num} {...f} />)}
+        </Stack>
+          <Paper elevation={0} sx={{ bgcolor: 'primary.light', borderRadius: 3, p: 3, mt: 3 }}>
+          <Typography variant="caption" color="primary.main" display="block" sx={{ mb: 1 }}>Changes made following evaluation</Typography>
+          <Typography variant="body2" color="text.secondary">
+            Two targeted revisions were made to the implementation based on recurring observations across sessions. 
+            "Overview" was changed to "Current Performance", student identifiers were updated from abbreviated codes ("S1", "S2") to the more legible label "Peer", 
+            and assignment references were standardised to "Assignment 1", "Assignment 2", and so on — changes that 
+            directly addressed the trust and comprehension issues participants verbalised. Additionally, the ranking 
+            cards were replaced with a sortable table displaying each peer's current grade and time spent in a single row. 
+            This gives the viewer a more complete picture of their standing in the class, and the ability to sort by 
+            either column makes the relationship between effort and outcome easier to explore independently.
+          </Typography>
+        </Paper> 
       </Container>
-    </AnimatedSection>
+    </Box>
   );
 }
 
@@ -526,10 +489,10 @@ onClick={() => {
   ];
 
   const decisions = [
-    { decision: 'Highcharts over Recharts', reason: 'Highcharts provides built-in crosshair support and richer tooltip formatting, important for the per-peer hover state.' },
-    { decision: 'MUI Grid v2 (Unstable_Grid2)', reason: 'The new grid system handles responsive breakpoints without the negative margin workarounds needed in Grid v1.' },
+    { decision: 'Highcharts', reason: 'Highcharts provides built-in crosshair support and richer tooltip formatting, important for the per-peer hover state.' },
+    { decision: 'MUI Grid v2', reason: 'The new grid system handles responsive breakpoints without the negative margin workarounds needed in Grid v1.' },
     { decision: 'One Chart component for both types', reason: 'Reduces duplication and makes the view-switch logic in the parent cleaner — one state variable drives all chart behaviour.' },
-    { decision: 'Static data module (grades.js)', reason: 'For a prototype, a flat JS data file was the fastest path to a working demo. A real implementation would fetch from an LMS API with the same data shape — a one-line change.' },
+    { decision: 'Static data module (grades.js)', reason: 'For a prototype, a flat JS data file was the fastest path to a working demo. A real implementation would fetch from an LMS API with the same data shape.' },
   ];
 
   return (
@@ -607,8 +570,8 @@ function ReflectionSection() {
               heading: 'What usability testing changed',
               items: [
                 'The "overview" label looked fine in the prototype but caused real confusion with users — a finding that only emerged through testing',
-                "Participants' instinct to locate themselves first informed what a v2 would prioritise: a percentile summary above the charts",
-                'Time-spent data needed an explanatory label — context that seemed obvious to the designer was not at all obvious to users',
+                "Participants have an instinct to locate themselves first but they also need more context regarding their peers.",
+                'Peer labels must remain anonymized while still clearly communicating their intended meaning.',
               ],
             },
           ].map(col => (
@@ -629,10 +592,6 @@ function ReflectionSection() {
         <Typography variant="h3" sx={{ mb: 2 }}>If I were building v2</Typography>
         <Grid container spacing={1.5}>
           {[
-            { title: 'Percentile summary card', desc: 'A single "You are in the top 40% by grade this assignment" label at the top — the first thing every participant looked for.' },
-            { title: 'Better peer labels', desc: 'Replace "s1, s2..." with "Peer A, Peer B..." or colour-coded avatars. Small change, large effect on perceived trustworthiness.' },
-            { title: 'Inline tooltip on time data', desc: 'An info icon explaining: "Students who invest more time tend to achieve higher grades." The design rationale needs to be surfaced in the UI.' },
-            { title: 'Rename "overview" → "All assignments"', desc: 'A concrete label that sets accurate expectations before the user clicks.' },
             { title: 'Scatter plot toggle', desc: 'A toggle to switch bar charts to a grade vs. time scatter plot — making the effort-outcome relationship even more direct.' },
             { title: 'API integration', desc: 'Replace the static grades.js file with a real LMS API. The component architecture already supports this — it is a one-line change to the data source.' },
           ].map(({ title, desc }) => (
