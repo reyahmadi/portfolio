@@ -62,15 +62,6 @@ export function CaseStudyShell({ sections, children }) {
         >
           <Container maxWidth="md" sx={{ py: 1.25 }}>
             <Stack direction="row" alignItems="center" justifyContent="space-between" spacing={2} flexWrap="wrap" useFlexGap>
-              <Button
-                component={Link}
-                to="/Work"
-                startIcon={<ArrowBackIcon fontSize="small" />}
-                size="small"
-                sx={{ color: 'text.secondary', fontWeight: 500 }}
-              >
-                All work
-              </Button>
               <Stack
                 direction="row"
                 spacing={0.25}
@@ -78,7 +69,6 @@ export function CaseStudyShell({ sections, children }) {
                   display: 'flex',
                   overflowX: 'auto',
                   flex: 1,
-                  justifyContent: { xs: 'flex-start', md: 'flex-end' },
                   pb: 0.25,
                   width: { xs: '100%', md: 'auto' },
                   mt: { xs: 0.5, md: 0 },
