@@ -41,8 +41,8 @@ export default function Work(props){
                       }}
                     >
                     <Grid  container className="intro" alignItems="center" justifyContent="center" spacing={0} >
-                    <Grid size={{ md: 2, sm: 12}}>
-                       <Box component="img" height={140} alt="" src={require('../static/img/business-intelligence.png')} sx={{ display: 'block', mx: 'auto' }} />
+                    <Grid size={{ md: 3, sm: 12}}>
+                       <Box component="img" height={140} alt="" src={i.icon} sx={{ display: 'block', mx: 'auto' }} />
                     </Grid>
                     <Grid size={{ md: 8, sm: 12}}>
 
@@ -61,9 +61,6 @@ export default function Work(props){
                     </CardActions>
                 </Grid>
                 </Grid>
-                <Typography component="a" variant="caption" href="http://www.freepik.com" target="_blank" rel="noreferrer" sx={{ display: 'block', px: 2, pb: 1.5, color: 'text.disabled' }}>
-                  Designed by Freepik
-                </Typography>
                 </Card>
 
 
