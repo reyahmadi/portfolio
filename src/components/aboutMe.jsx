@@ -32,10 +32,10 @@ export default function About(props){
               decided to get my <strong>Master's degree</strong> in <strong>Interactive Arts and Technology </strong>
               from Simon Fraser University. During my studies as a <strong>User Experience Researcher</strong>,
               I worked on Learning Analytics Dashboards (LADs) under the supervision of Dr. Marek Hatala.
-              I was in charge of ta large-scale controlled experiment to analyze the impact of a LAD designed based
+              I was in charge of a large-scale controlled experiment to analyze the impact of a LAD designed based
               on Social Comparison Theory and compre it to that of the current dashboard students
               used. You can find more detail in Work tab. Besides my passion for UX, I like to spend
-              my free time cokking, baking, drawing, painting, or playing board games with my friends.
+              my free time cooking, baking, drawing, painting, or playing board games with my friends.
               
             </Typography>
           </Grid>
