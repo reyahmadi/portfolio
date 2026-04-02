@@ -115,7 +115,7 @@ function App() {
       
       <Routes>
         <Route path="/Home" element={
-          <Fade in={openTab==="Home" || location.pathname==="/Home"} timeout={500} unmountOnExit>
+          <Fade in={location.pathname==="/Home"} timeout={500} unmountOnExit>
             <div>
               <Intro openTab={openTab} /> 
             </div>
@@ -139,12 +139,20 @@ function App() {
         } />
       
         <Route path="/" element={
-          <Fade in={location.pathname==="/" || location.pathname==="/Home"} timeout={500} unmountOnExit>
+          <Fade in={location.pathname==="/"} timeout={500} unmountOnExit>
             <div>
               <Intro openTab={openTab} /> 
             </div>
           </Fade>
-        } />      
+        } />     
+
+        <Route path="/portfolio" element={
+          <Fade in={location.pathname==="/portfolio"} timeout={500} unmountOnExit>
+            <div>
+              <Intro openTab={openTab} /> 
+            </div>
+          </Fade>
+        } />  
 
         <Route path="/contact" element={
           <Fade in={location.pathname==="/Contact"} timeout={500} unmountOnExit>
